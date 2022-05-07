@@ -50,11 +50,6 @@ export type NetworkConfig = {
   isFork?: boolean;
   // contains the forked off chainId
   underlyingChainId?: number;
-  bridge?: {
-    brandColor: string;
-    name: string;
-    url: string;
-  };
 };
 
 export type BaseNetworkConfig = Omit<NetworkConfig, "explorerLinkBuilder">;
