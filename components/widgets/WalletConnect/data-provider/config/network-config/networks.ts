@@ -1,4 +1,3 @@
-import { PolygonLogo, AvalancheLogo } from "../../../assets/branding";
 import { ChainId } from "../../chains";
 import { BaseNetworkConfig } from "../types";
 
@@ -81,7 +80,6 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
       brandColor: "130, 71, 229",
       name: "Polygon PoS Bridge",
       url: "https://wallet.matic.network/bridge/",
-      logo: PolygonLogo,
     },
   },
   [ChainId.mumbai]: {
@@ -132,7 +130,6 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
       brandColor: "232, 65, 66",
       name: "Avalanche Bridge",
       url: "https://bridge.avax.network/",
-      logo: AvalancheLogo,
     },
   },
   [ChainId.avalanche]: {
@@ -162,7 +159,6 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
       brandColor: "232, 65, 66",
       name: "Avalanche Bridge",
       url: "https://bridge.avax.network/",
-      logo: AvalancheLogo,
     },
   },
 } as const;

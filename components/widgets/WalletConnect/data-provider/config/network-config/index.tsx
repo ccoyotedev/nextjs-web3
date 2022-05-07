@@ -1,8 +1,14 @@
 import { ChainId } from "../../chains";
 
 import { networkConfigs as _networkConfigs } from "./networks";
-import { CustomMarket, marketsData as _marketsData } from "../market-config";
-import { ExplorerLinkBuilderConfig, ExplorerLinkBuilderProps, MarketDataType, NetworkConfig, BaseNetworkConfig } from "../types";
+import { CustomChain, chainData as _chainData } from "../chain-config";
+import {
+  ExplorerLinkBuilderConfig,
+  ExplorerLinkBuilderProps,
+  ChainDataType,
+  NetworkConfig,
+  BaseNetworkConfig,
+} from "../types";
 import { ethers } from "ethers";
 
 export type Pool = {
@@ -26,71 +32,102 @@ const ENABLE_TESTNET = process.env.ENABLE_TESTNET === "true";
  * Generates network configs based on networkConfigs & fork settings.
  * Forks will have a rpcOnly clone of their underlying base network config.
  */
-export const networkConfigs = Object.keys(_networkConfigs).reduce((acc, value) => {
-  const FORK_ENABLED = typeof window !== "undefined" ? window.localStorage.getItem("forkEnabled") === "true" : false;
-  const FORK_BASE_CHAIN_ID = typeof window !== "undefined" ? Number(window.localStorage.getItem("forkBaseChainId")) : 1;
+export const networkConfigs = Object.keys(_networkConfigs).reduce(
+  (acc, value) => {
+    const FORK_ENABLED =
+      typeof window !== "undefined"
+        ? window.localStorage.getItem("forkEnabled") === "true"
+        : false;
+    const FORK_BASE_CHAIN_ID =
+      typeof window !== "undefined"
+        ? Number(window.localStorage.getItem("forkBaseChainId"))
+        : 1;
 
-  acc[value] = _networkConfigs[value];
-  if (FORK_ENABLED && Number(value) === FORK_BASE_CHAIN_ID) {
-    const FORK_CHAIN_ID = Number(window.localStorage.getItem("forkChainId") || 3030);
-    const FORK_RPC_URL = window.localStorage.getItem("forkRPCUrl") || "http://127.0.0.1:8545";
-    const FORK_WS_RPC_URL = window.localStorage.getItem("forkWsRPCUrl") || "ws://127.0.0.1:8545";
+    acc[value] = _networkConfigs[value];
+    if (FORK_ENABLED && Number(value) === FORK_BASE_CHAIN_ID) {
+      const FORK_CHAIN_ID = Number(
+        window.localStorage.getItem("forkChainId") || 3030
+      );
+      const FORK_RPC_URL =
+        window.localStorage.getItem("forkRPCUrl") || "http://127.0.0.1:8545";
+      const FORK_WS_RPC_URL =
+        window.localStorage.getItem("forkWsRPCUrl") || "ws://127.0.0.1:8545";
 
-    acc[FORK_CHAIN_ID] = {
-      ..._networkConfigs[value],
-      rpcOnly: true,
-      isFork: true,
-      privateJsonRPCUrl: FORK_RPC_URL,
-      privateJsonRPCWSUrl: FORK_WS_RPC_URL,
-      underlyingChainId: FORK_BASE_CHAIN_ID,
-    };
-  }
-  return acc;
-}, {} as { [key: string]: BaseNetworkConfig });
+      acc[FORK_CHAIN_ID] = {
+        ..._networkConfigs[value],
+        rpcOnly: true,
+        isFork: true,
+        privateJsonRPCUrl: FORK_RPC_URL,
+        privateJsonRPCWSUrl: FORK_WS_RPC_URL,
+        underlyingChainId: FORK_BASE_CHAIN_ID,
+      };
+    }
+    return acc;
+  },
+  {} as { [key: string]: BaseNetworkConfig }
+);
 
 /**
- * Generates network configs based on marketsData & fork settings.
- * Fork markets are generated for all markets on the underlying base chain.
+ * Generates network configs based on chainData & fork settings.
+ * Fork chains are generated for all chains on the underlying base chain.
  */
-export const marketsData = Object.keys(_marketsData).reduce((acc, value) => {
-  const FORK_ENABLED = typeof window !== "undefined" ? window.localStorage.getItem("forkEnabled") === "true" : false;
-  const FORK_BASE_CHAIN_ID = typeof window !== "undefined" ? Number(window.localStorage.getItem("forkBaseChainId")) : 1;
+export const chainData = Object.keys(_chainData).reduce((acc, value) => {
+  const FORK_ENABLED =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("forkEnabled") === "true"
+      : false;
+  const FORK_BASE_CHAIN_ID =
+    typeof window !== "undefined"
+      ? Number(window.localStorage.getItem("forkBaseChainId"))
+      : 1;
 
-  acc[value] = _marketsData[value as keyof typeof CustomMarket];
-  if (FORK_ENABLED && _marketsData[value as keyof typeof CustomMarket].chainId === FORK_BASE_CHAIN_ID) {
-    const FORK_CHAIN_ID = Number(window.localStorage.getItem("forkChainId") || 3030);
+  acc[value] = _chainData[value as keyof typeof CustomChain];
+  if (
+    FORK_ENABLED &&
+    _chainData[value as keyof typeof CustomChain].chainId === FORK_BASE_CHAIN_ID
+  ) {
+    const FORK_CHAIN_ID = Number(
+      window.localStorage.getItem("forkChainId") || 3030
+    );
 
     acc[`fork_${value}`] = {
-      ..._marketsData[value as keyof typeof CustomMarket],
+      ..._chainData[value as keyof typeof CustomChain],
       chainId: FORK_CHAIN_ID,
     };
   }
   return acc;
-}, {} as { [key: string]: MarketDataType });
+}, {} as { [key: string]: ChainDataType });
 
 export function getDefaultChainId() {
-  return marketsData[availableMarkets[0]].chainId;
+  return chainData[availableChains[0]].chainId;
 }
 
 export function getSupportedChainIds(): number[] {
   return Array.from(
-    Object.keys(marketsData).reduce((acc, value) => {
-      if (ENABLE_TESTNET || !networkConfigs[marketsData[value as keyof typeof CustomMarket].chainId].isTestnet)
-        acc.add(marketsData[value as keyof typeof CustomMarket].chainId);
+    Object.keys(chainData).reduce((acc, value) => {
+      if (
+        ENABLE_TESTNET ||
+        !networkConfigs[chainData[value as keyof typeof CustomChain].chainId]
+          .isTestnet
+      )
+        acc.add(chainData[value as keyof typeof CustomChain].chainId);
       return acc;
     }, new Set<number>())
   );
 }
 
-/**
- * selectable markets (markets in a available network + forks when enabled)
- */
-export const availableMarkets = Object.keys(marketsData).filter((key) =>
-  getSupportedChainIds().includes(marketsData[key as keyof typeof CustomMarket].chainId)
-) as CustomMarket[];
+export const availableChains = Object.keys(chainData).filter((key) =>
+  getSupportedChainIds().includes(
+    chainData[key as keyof typeof CustomChain].chainId
+  )
+) as CustomChain[];
 
 const linkBuilder =
-  ({ baseUrl, addressPrefix = "address", txPrefix = "tx" }: ExplorerLinkBuilderConfig) =>
+  ({
+    baseUrl,
+    addressPrefix = "address",
+    txPrefix = "tx",
+  }: ExplorerLinkBuilderConfig) =>
   ({ tx, address }: ExplorerLinkBuilderProps): string => {
     if (tx) {
       return `${baseUrl}/${txPrefix}/${tx}`;
@@ -119,11 +156,18 @@ export const getProvider = (chainId: ChainId): ethers.providers.Provider => {
     const config = getNetworkConfig(chainId);
     const chainProviders: ethers.providers.StaticJsonRpcProvider[] = [];
     if (config.privateJsonRPCUrl) {
-      providers[chainId] = new ethers.providers.StaticJsonRpcProvider(config.privateJsonRPCUrl, chainId);
+      providers[chainId] = new ethers.providers.StaticJsonRpcProvider(
+        config.privateJsonRPCUrl,
+        chainId
+      );
       return providers[chainId];
     }
     if (config.publicJsonRPCUrl.length) {
-      config.publicJsonRPCUrl.map((rpc) => chainProviders.push(new ethers.providers.StaticJsonRpcProvider(rpc, chainId)));
+      config.publicJsonRPCUrl.map((rpc) =>
+        chainProviders.push(
+          new ethers.providers.StaticJsonRpcProvider(rpc, chainId)
+        )
+      );
     }
     if (!chainProviders.length) {
       throw new Error(`${chainId} has no jsonRPCUrl configured`);
@@ -131,11 +175,13 @@ export const getProvider = (chainId: ChainId): ethers.providers.Provider => {
     if (chainProviders.length === 1) {
       providers[chainId] = chainProviders[0];
     } else {
-      providers[chainId] = new ethers.providers.FallbackProvider(chainProviders);
+      providers[chainId] = new ethers.providers.FallbackProvider(
+        chainProviders
+      );
     }
   }
   return providers[chainId];
 };
 
 // reexport
-export { CustomMarket };
+export { CustomChain };

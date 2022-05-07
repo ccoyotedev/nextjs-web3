@@ -54,21 +54,13 @@ export type NetworkConfig = {
     brandColor: string;
     name: string;
     url: string;
-    logo: string;
   };
 };
 
 export type BaseNetworkConfig = Omit<NetworkConfig, "explorerLinkBuilder">;
 
-export type MarketDataType = {
+// Custom
+export type ChainDataType = {
   // the network the market operates on
   chainId: ChainId;
-  // market logo in the topbar
-  logo: string;
-  // logo for the active market in dropdown
-  activeLogo?: string;
-  // additional logo on the right hand side
-  subLogo?: string;
-  // aToken prefix string, which will be cut of in the ui
-  aTokenPrefix: string;
 };
