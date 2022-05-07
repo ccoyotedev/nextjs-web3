@@ -2,6 +2,8 @@
 
 NextJS repo to quickly spin up Web3 applications with multiple wallet support.
 
+<img width="1440" alt="Screenshot 2022-05-07 at 15 09 43" src="https://user-images.githubusercontent.com/44173285/167257969-d23b7d1c-3674-47c4-85b4-843bec8f561d.png">
+
 ## Supported Networks
 ```
 mainnet = 1,
