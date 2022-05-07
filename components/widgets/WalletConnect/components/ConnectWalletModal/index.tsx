@@ -1,10 +1,23 @@
 import React from "react";
 
-import { AvailableWeb3Connectors, ConnectWalletModalProps, getWeb3ProviderFromBrowser } from "../../data-provider";
+import {
+  AvailableWeb3Connectors,
+  ConnectWalletModalProps,
+  getWeb3ProviderFromBrowser,
+} from "../../data-provider";
 
 import { WarningArea } from "../WarningArea";
-import { UnlockWalletWrapper, WalletCard, SelectPreferredNetwork } from "./components";
-import { AUTHEREUM_API_KEY, getFortmaticKeyByChainId, PORTIS_DAPP_ID, VENLY_CLIENT_ID } from "../../data-provider/config";
+import {
+  UnlockWalletWrapper,
+  WalletCard,
+  SelectPreferredNetwork,
+} from "./components";
+import {
+  AUTHEREUM_API_KEY,
+  getFortmaticKeyByChainId,
+  PORTIS_DAPP_ID,
+  VENLY_CLIENT_ID,
+} from "../../data-provider/config";
 
 import messages from "./messages";
 
@@ -34,14 +47,22 @@ export const ConnectWalletModal = ({
   const browserWalletProvider = getWeb3ProviderFromBrowser();
 
   const handleUnlockExternalWallet = (providerName: AvailableWeb3Connectors) =>
-    onUnlockExternalWallet(providerName, preferredChainId, supportedChainIds, false);
+    onUnlockExternalWallet(
+      providerName,
+      preferredChainId,
+      supportedChainIds,
+      false
+    );
 
   // @ts-ignore
   const isImToken = typeof window !== "undefined" ? !!window.imToken : false;
 
   const wallets: Wallet[] = [
     {
-      title: messages.titleBrowserWallet.replace("{walletName}", isImToken ? "imToken" : "Browser"),
+      title: messages.titleBrowserWallet.replace(
+        "{walletName}",
+        isImToken ? "imToken" : "Browser"
+      ),
       description: "(MetaMask, Trustwallet, Enjin)",
       providerName: "browser",
       icon: isImToken ? icons.imToken : icons.browserWallets,
@@ -92,13 +113,19 @@ export const ConnectWalletModal = ({
       title: "Fortmatic",
       providerName: "fortmatic",
       icon: icons.formaticIcon,
-      notSupported: !getFortmaticKeyByChainId(preferredChainId) || preferredChainId === ChainId.polygon || preferredChainId === ChainId.avalanche,
+      notSupported:
+        !getFortmaticKeyByChainId(preferredChainId) ||
+        preferredChainId === ChainId.polygon ||
+        preferredChainId === ChainId.avalanche,
     },
     {
       title: "imToken",
       providerName: "wallet-connect",
       icon: icons.imToken,
-      notSupported: isImToken || preferredChainId === ChainId.polygon || preferredChainId === ChainId.avalanche,
+      notSupported:
+        isImToken ||
+        preferredChainId === ChainId.polygon ||
+        preferredChainId === ChainId.avalanche,
     },
     {
       title: "Venly",
@@ -109,7 +136,10 @@ export const ConnectWalletModal = ({
   ];
 
   return (
-    <UnlockWalletWrapper isVisible={isVisible} onBackdropPress={onBackdropPress}>
+    <UnlockWalletWrapper
+      isVisible={isVisible}
+      onBackdropPress={onBackdropPress}
+    >
       <SelectPreferredNetwork
         preferredNetwork={preferredChainId}
         onSelectPreferredNetwork={onSelectPreferredChainId}
@@ -129,7 +159,11 @@ export const ConnectWalletModal = ({
             <WalletCard
               title={wallet.title}
               description={wallet.description}
-              errorMessage={wallet.providerName === "browser" && !browserWalletProvider ? wallet.errorMessage : ""}
+              errorMessage={
+                wallet.providerName === "browser" && !browserWalletProvider
+                  ? wallet.errorMessage
+                  : ""
+              }
               providerName={wallet.providerName}
               icon={wallet.icon}
               disabled={wallet.disabled}
@@ -140,12 +174,6 @@ export const ConnectWalletModal = ({
       </div>
 
       <div className="privacy-inner">
-        {/* <p>
-          {messages.needHelp}
-          <a href="https://docs.aave.com/faq/troubleshooting" target="__blank">
-            {messages.readOurFAQ}
-          </a>
-        </p> */}
         <p>
           <span key="disclaimer">{messages.disclaimer}</span>
           {messages.disclaimerBottomText}

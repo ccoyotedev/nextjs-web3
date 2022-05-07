@@ -6,24 +6,14 @@ const styles = css`
     border: none;
     background-color: white;
     padding: 0;
+    cursor: pointer;
+  }
+  .wallet-card:hover {
+    background-color: #faf7fe;
   }
 
-  .wallet-card:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    filter: blur(4px);
-    border-radius: 4px;
-    transition: 300ms;
-  }
   .wallet-card:disabled {
     box-shadow: none !important;
-  }
-  .wallet-card:disabled:after {
-    display: none;
   }
   .wallet-card:disabled:active .image-inner img {
     transform: scale(1);
@@ -42,7 +32,7 @@ const styles = css`
 
   .inner {
     width: 100%;
-    height: 90px;
+    height: 100px;
     position: relative;
     z-index: 2;
     display: flex;
@@ -56,9 +46,6 @@ const styles = css`
     transition-timing-function: ease;
     border: 1px solid transparent;
     padding: 17px 8px 8px;
-  }
-  .wallet-card:hover .inner {
-    border: 1px solid #c82ac2;
   }
 
   .image-inner {
@@ -90,7 +77,8 @@ const styles = css`
   .text-inner span {
     display: block;
     font-weight: 300;
-    font-size: 10px;
+    font-size: 8px;
+    margin-top: 4px;
   }
 `;
 

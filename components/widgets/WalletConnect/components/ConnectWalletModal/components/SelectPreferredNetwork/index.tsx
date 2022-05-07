@@ -5,6 +5,7 @@ import styles from "./styles";
 import { getNetworkConfig } from "../../../../data-provider/config";
 import { ChainId } from "../../../../data-provider/chains";
 import { ChevronIcon } from "../../../../assets/icons";
+import Image from "next/image";
 
 interface SelectPreferredNetworkProps {
   preferredNetwork: ChainId;
@@ -12,13 +13,19 @@ interface SelectPreferredNetworkProps {
   supportedNetworks: ChainId[];
 }
 
-export const SelectPreferredNetwork = ({ preferredNetwork, onSelectPreferredNetwork, supportedNetworks }: SelectPreferredNetworkProps) => {
+export const SelectPreferredNetwork = ({
+  preferredNetwork,
+  onSelectPreferredNetwork,
+  supportedNetworks,
+}: SelectPreferredNetworkProps) => {
   const [visible, setVisible] = useState(false);
 
   const getFormattedName = (chainId: ChainId) => {
     const config = getNetworkConfig(chainId);
-    if (config?.isFork) return messages.forkNetwork.replace("{network}", config.name);
-    if (config?.isTestnet) return messages.testNetwork.replace("{network}", config.name);
+    if (config?.isFork)
+      return messages.forkNetwork.replace("{network}", config.name);
+    if (config?.isTestnet)
+      return messages.testNetwork.replace("{network}", config.name);
     return messages.mainnet.replace("{network}", config.name);
   };
 
@@ -29,9 +36,15 @@ export const SelectPreferredNetwork = ({ preferredNetwork, onSelectPreferredNetw
       <p className="title">{messages.title}</p>
 
       <div className="dropdown">
-        <button className="select" type="button" onClick={() => setVisible((prevState) => !prevState)}>
+        <button
+          className="select"
+          type="button"
+          onClick={() => setVisible((prevState) => !prevState)}
+        >
           <span>{getFormattedName(preferredNetwork)}</span>
-          <img className="select-arrow" width={12} height={6} src={ChevronIcon} alt="chevron" />
+          <span className="select-arrow">
+            <Image width={12} height={6} src={ChevronIcon} alt="chevron" />
+          </span>
         </button>
         <div className={`dropdown-items ${visible ? "visible" : ""}`}>
           {supportedNetworks.map((network) => (

@@ -1,9 +1,25 @@
 import css from "styled-jsx/css";
 
 const styles = css`
+  .select-preferred-network {
+    position: relative;
+    z-index: 5;
+    margin-bottom: 35px;
+    margin-top: -20px;
+    text-align: center;
+  }
+
+  .select-preferred-network .title {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #200543;
+  }
+
   .dropdown {
     position: relative;
+    cursor: pointer;
   }
+
   .dropdown-items {
     transform: scale(0);
     display: flex;
@@ -29,7 +45,7 @@ const styles = css`
     background-color: #faf7fe;
   }
   .dropdown .select:hover {
-    border: 1px solid #c82ac2;
+    border: 1px solid black;
   }
   .dropdown .select span {
     text-transform: capitalize;
@@ -37,7 +53,7 @@ const styles = css`
   .dropdown .select-arrow {
     position: absolute;
     right: 10px;
-    top: calc(50% + 1px);
+    top: calc(50% - 2px);
     transform: translateY(-50%);
   }
 
@@ -67,20 +83,6 @@ const styles = css`
   }
   .dropdown .option:last-of-type:after {
     display: none;
-  }
-
-  .select-preferred-network {
-    position: relative;
-    z-index: 5;
-    margin-bottom: 35px;
-    margin-top: -20px;
-    text-align: center;
-  }
-
-  .select-preferred-network .title {
-    font-size: 18px;
-    margin-bottom: 5px;
-    color: #200543;
   }
 `;
 

@@ -1,5 +1,6 @@
 import { CloseIcon } from "../../assets/icons";
 import styles from "./styles";
+import Image from "next/image";
 
 interface Props {
   children: React.ReactNode;
@@ -13,7 +14,9 @@ export const Modal = ({ children, open, onClose }: Props) => {
       <>
         <div className="overlay">
           <div className="panel">
-            <img src={CloseIcon} alt="close modal" className="close-icon" onClick={onClose} />
+            <div className="close-icon" onClick={onClose}>
+              <Image src={CloseIcon} alt="close modal" />
+            </div>
             {children}
           </div>
         </div>

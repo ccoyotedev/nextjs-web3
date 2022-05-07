@@ -1,12 +1,11 @@
-import React, { ReactNode, ReactNodeArray } from "react";
-import classNames from "classnames";
-
+import React, { ReactNode } from "react";
+import Image from "next/image";
 import styles from "./styles";
 
 import { WarningIcon } from "../../assets/icons";
 
 interface WarningAreaProps {
-  title?: string | null | {} | ReactNodeArray;
+  title?: string | null | {} | ReactNode;
   children?: ReactNode;
   withMargin?: boolean;
   orangeFill?: boolean;
@@ -15,16 +14,12 @@ interface WarningAreaProps {
 export const WarningArea = ({ title, children }: WarningAreaProps) => {
   return (
     <div className="warning-area">
-      <div
-        className={classNames("top-line", {
-          topLine: !!children,
-        })}
-      >
+      <div className={`top-line ${!!children ? "topLine" : ""}`}>
         {title && (
-          <p>
-            <img src={WarningIcon} alt="Aave" />
-            {title}
-          </p>
+          <>
+            <Image src={WarningIcon} alt="Aave" />
+            {typeof title === "string" ? <p>{title}</p> : title}
+          </>
         )}
       </div>
 

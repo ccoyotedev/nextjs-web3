@@ -16,11 +16,10 @@ export default css`
 
   .panel {
     position: relative;
-    max-width: 750px;
+    width: 800px;
+    max-width: 100%;
     margin: auto;
-    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 12px 9px rgba(200, 42, 194, 0.5);
   }
 
   .close-icon {
