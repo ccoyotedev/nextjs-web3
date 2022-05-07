@@ -4,18 +4,28 @@ export default css`
   .web3-button {
     border: 1px solid black;
     background-color: black;
-    padding: 0.8rem 2.4rem;
+    padding: 0.8rem 1.2rem;
     height: 5.2rem;
     color: white;
-    cursor: pointer;
     position: relative;
+    min-width: 11rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .web3-button.connected {
+  .web3-button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  .web3-button:disabled {
+    opacity: 0.4;
+  }
+  .web3-button.connected:not(:disabled) {
     background-color: white;
     color: black;
   }
 
-  .web3-button.connected:active {
+  .web3-button.connected:not(:disabled):active {
     background-color: rgba(0, 0, 0, 0.1);
   }
 

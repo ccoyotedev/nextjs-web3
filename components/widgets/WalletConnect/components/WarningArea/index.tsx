@@ -17,7 +17,9 @@ export const WarningArea = ({ title, children }: WarningAreaProps) => {
       <div className={`top-line ${!!children ? "topLine" : ""}`}>
         {title && (
           <>
-            <Image src={WarningIcon} alt="Aave" />
+            <span className="icon">
+              <Image src={WarningIcon} alt="Aave" width={20} height={20} />
+            </span>
             {typeof title === "string" ? <p>{title}</p> : title}
           </>
         )}

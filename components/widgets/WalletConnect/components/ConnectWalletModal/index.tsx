@@ -148,7 +148,7 @@ export const ConnectWalletModal = ({
 
       {error && (
         <WarningArea title={messages.errorCaption}>
-          <p>{error}</p>
+          <p>Hello</p>
         </WarningArea>
       )}
 

@@ -6,22 +6,25 @@ const styles = css`
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
-    background-color: #faf7fe;
+    background-color: #ffe2dc;
     margin-bottom: 24px;
+    width: 100%;
   }
 
   .top-line {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    position: relative;
   }
   .top-line.topLine {
     margin-bottom: 10px;
   }
   .top-line.topLine p {
     font-weight: 600;
+    margin: 0;
   }
-  .top-line img {
+  .top-line .icon {
     margin-top: 3px;
     position: absolute;
     left: 0;
