@@ -2,7 +2,33 @@
 
 NextJS repo to quickly spin up Web3 applications with multiple wallet support.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Supported Networks
+```
+mainnet = 1,
+ropsten = 3,
+kovan = 42,
+xdai = 100,
+polygon = 137,
+mumbai = 80001,
+avalanche = 43114,
+fuji = 43113, // avalanche test network
+arbitrum_one = 42161,
+arbitrum_rinkeby = 421611
+```
+
+## Supported Wallets
+- Browser Wallets (Metamask, Trustwallet, Enjin)
+- Fortmatic (Requires Key)
+- Wallet Connect
+- Wallet Link
+- Mew Wallet
+- Authereum (Requires key)
+- Torus
+- Gnosis Safe
+- Portis (Requires Key)
+- Clover
+- Venly (Requires Client Id)
+
 
 ## Getting Started
 
